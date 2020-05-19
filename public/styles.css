@@ -1,0 +1,16 @@
+body {
+    background-color: hsl(210, 32%, 93%) ;
+
+}
+
+button[type= submit] {
+    background-color: hsl(210, 75%, 50%);
+}
+
+label{
+    color: hsl(212, 18%, 35%);
+}
+
+title{
+    color: hsl(212, 56%, 16%);
+}
