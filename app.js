@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const contactRouter = require('./routes/contact.js');
+const contactRouter = require('./routes/contact');
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,50 +1,49 @@
 const express = require('express');
+// create router
+const router = express.Router();
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 
+// loads contents into process.env
 dotenv.config();
 
-const router = express.Router();
-
 const transporter = nodemailer.createTransport({
-  host: 'smtp.sendgrid.net',
+  host: "smtp.sendgrid.net",
   port: 465,
-  secure: true, // true for 465, false for other ports
+  secure: true,
   auth: {
     user: process.env.MAIL_USERNAME,
     pass: process.env.MAIL_PASSWORD,
   },
-});
+})
+
 
 // GET /contact
-router.get('/', (req, res) => {
+router.get('/contact', (req, res) => {
   res.render('contact', {
-    title: "Contact Me. Please. I'm lonely.",
+    title: 'Contact Us',
     submitted: false,
-  });
-});
+  })
+})
 
 // POST /contact
-router.post('/', (req, res) => {
-  transporter
-    .sendMail({
-      from: process.env.MAIL_FROM,
-      to: process.env.MAIL_TO,
-      subject: `New Contact from ${req.body.name}`,
-      html: `<b>New Contact</b><br>
-    <b>Email:</b> ${req.body.email}<br>
-    <b>Name:</b> ${req.body.name}<br>
-    <b>Comments:</b> ${req.body.comments}<br>
-    `, // html body
-    })
-    .then((status) => {
+router.post('/contact', (req, res) => {
+  transporter.sendMail({
+    from: process.env.MAIL_FROM, // sender address
+    to: process.env.MAIL_TO, // list of receivers
+    subject: `New Contact From ${req.body.name}`,
+    html: `<b>New Contact</b>
+        <b>Email: </b>${req.body.email}
+        <b>Name: </b>${req.body.name}
+        <b>Comments: </b>${req.body.comments}`,
+  })
+    .then(status => {
       console.log(status);
 
       res.render('contact', {
-        title: 'Thank You',
+        title: 'Thank you',
         submitted: true,
-      });
-    });
-});
-
+      })
+    })
+})
 module.exports = router;
